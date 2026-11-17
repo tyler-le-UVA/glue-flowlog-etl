@@ -16,6 +16,12 @@ variable "vpc_cidr" {
   default     = "10.50.0.0/16"
 }
 
+variable "availability_zone" {
+  description = "AZ for the subnet. Pinned because not every AZ offers every instance type (us-east-1e has no t3)."
+  type        = string
+  default     = "us-east-1a"
+}
+
 variable "public_subnet_cidr" {
   description = "CIDR for the single public subnet."
   type        = string
