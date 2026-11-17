@@ -1,0 +1,8 @@
+# Copy to backend.hcl (git-ignored) and fill in.
+# Reuse your existing Terraform state bucket — just use a NEW key so this
+# project's state is completely separate from the auditor project.
+bucket       = "YOUR-EXISTING-TF-STATE-BUCKET"
+key          = "glue-flowlog-etl/terraform.tfstate"
+region       = "us-east-1"
+encrypt      = true
+use_lockfile = true # S3-native state locking (Terraform >= 1.10)
