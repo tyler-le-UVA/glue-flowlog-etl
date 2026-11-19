@@ -41,7 +41,7 @@ Filter_node1795035948586 = Filter.apply(frame=ChangeSchema_node1795035029012, f=
 DerivedColumn_node1795035995185 = Filter_node1795035948586.gs_derived(colName="start_time", expr="CAST(start AS timestamp)")
 
 # Script generated for node SQL Query
-SqlQuery0 = '''
+SqlQuery624 = '''
 WITH e AS (
   SELECT *,
     CAST(`end` AS timestamp)                AS end_time,
@@ -67,7 +67,7 @@ SELECT *,
        ELSE 'external' END AS traffic_category
 FROM e
 '''
-SQLQuery_node1795036054735 = sparkSqlQuery(glueContext, query = SqlQuery0, mapping = {"myDataSource":DerivedColumn_node1795035995185}, transformation_ctx = "SQLQuery_node1795036054735")
+SQLQuery_node1795036054735 = sparkSqlQuery(glueContext, query = SqlQuery624, mapping = {"myDataSource":DerivedColumn_node1795035995185}, transformation_ctx = "SQLQuery_node1795036054735")
 
 # Script generated for node Drop Fields
 DropFields_node1795036439054 = DropFields.apply(frame=SQLQuery_node1795036054735, paths=["start", "end", "log_status"], transformation_ctx="DropFields_node1795036439054")

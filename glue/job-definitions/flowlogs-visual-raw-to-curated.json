@@ -1,0 +1,649 @@
+{
+    "Job": {
+        "Name": "flowlogs-visual-raw-to-curated",
+        "JobMode": "VISUAL",
+        "JobRunQueuingEnabled": false,
+        "Description": "",
+        "Role": "arn:aws:iam::209901331329:role/glue-flowlog-etl-job-role",
+        "CreatedOn": "2026-11-18T20:49:58.557000+00:00",
+        "LastModifiedOn": "2026-11-19T14:20:59.170000+00:00",
+        "ExecutionProperty": {
+            "MaxConcurrentRuns": 1
+        },
+        "Command": {
+            "Name": "glueetl",
+            "ScriptLocation": "s3://aws-glue-assets-209901331329-us-east-1/scripts/flowlogs-visual-raw-to-curated.py",
+            "PythonVersion": "3"
+        },
+        "DefaultArguments": {
+            "--CURATED_PATH": "s3://glue-flowlog-etl-curated-209901331329-us-east-1/flows/",
+            "--enable-glue-datacatalog": "",
+            "--job-bookmark-option": "job-bookmark-disable",
+            "--TempDir": "s3://aws-glue-assets-209901331329-us-east-1/temporary/",
+            "--enable-metrics": "",
+            "--enable-spark-ui": "true",
+            "--extra-py-files": "s3://aws-glue-studio-transforms-510798373988-prod-us-east-1/gs_common.py,s3://aws-glue-studio-transforms-510798373988-prod-us-east-1/gs_derived.py",
+            "--spark-event-logs-path": "s3://aws-glue-assets-209901331329-us-east-1/sparkHistoryLogs/",
+            "--enable-job-insights": "true",
+            "--enable-observability-metrics": "true",
+            "--conf": "spark.eventLog.rolling.enabled=true --conf spark.sql.catalog.glue_catalog.glue.skip-name-validation=true",
+            "--enable-continuous-cloudwatch-log": "true",
+            "--job-language": "python"
+        },
+        "MaxRetries": 0,
+        "AllocatedCapacity": 2,
+        "Timeout": 15,
+        "MaxCapacity": 2.0,
+        "WorkerType": "G.1X",
+        "NumberOfWorkers": 2,
+        "GlueVersion": "6.0",
+        "CodeGenConfigurationNodes": {
+            "node-1795035006362": {
+                "CatalogSource": {
+                    "Name": "AWS Glue Data Catalog",
+                    "Database": "flowlogs_db",
+                    "Table": "raw_awslogs",
+                    "PartitionPredicate": ""
+                }
+            },
+            "node-1795035029012": {
+                "ApplyMapping": {
+                    "Name": "Change Schema",
+                    "Inputs": [
+                        "node-1795035006362"
+                    ],
+                    "Mapping": [
+                        {
+                            "ToKey": "version",
+                            "FromPath": [
+                                "version"
+                            ],
+                            "FromType": "long",
+                            "ToType": "long",
+                            "Dropped": true
+                        },
+                        {
+                            "ToKey": "account_id",
+                            "FromPath": [
+                                "account-id"
+                            ],
+                            "FromType": "long",
+                            "ToType": "string",
+                            "Dropped": false
+                        },
+                        {
+                            "ToKey": "interface_id",
+                            "FromPath": [
+                                "interface-id"
+                            ],
+                            "FromType": "string",
+                            "ToType": "string",
+                            "Dropped": false
+                        },
+                        {
+                            "ToKey": "srcaddr",
+                            "FromPath": [
+                                "srcaddr"
+                            ],
+                            "FromType": "string",
+                            "ToType": "string",
+                            "Dropped": false
+                        },
+                        {
+                            "ToKey": "dstaddr",
+                            "FromPath": [
+                                "dstaddr"
+                            ],
+                            "FromType": "string",
+                            "ToType": "string",
+                            "Dropped": false
+                        },
+                        {
+                            "ToKey": "srcport",
+                            "FromPath": [
+                                "srcport"
+                            ],
+                            "FromType": "long",
+                            "ToType": "int",
+                            "Dropped": false
+                        },
+                        {
+                            "ToKey": "dstport",
+                            "FromPath": [
+                                "dstport"
+                            ],
+                            "FromType": "long",
+                            "ToType": "int",
+                            "Dropped": false
+                        },
+                        {
+                            "ToKey": "protocol",
+                            "FromPath": [
+                                "protocol"
+                            ],
+                            "FromType": "long",
+                            "ToType": "int",
+                            "Dropped": false
+                        },
+                        {
+                            "ToKey": "packets",
+                            "FromPath": [
+                                "packets"
+                            ],
+                            "FromType": "long",
+                            "ToType": "long",
+                            "Dropped": false
+                        },
+                        {
+                            "ToKey": "bytes",
+                            "FromPath": [
+                                "bytes"
+                            ],
+                            "FromType": "long",
+                            "ToType": "long",
+                            "Dropped": false
+                        },
+                        {
+                            "ToKey": "start",
+                            "FromPath": [
+                                "start"
+                            ],
+                            "FromType": "long",
+                            "ToType": "long",
+                            "Dropped": false
+                        },
+                        {
+                            "ToKey": "end",
+                            "FromPath": [
+                                "end"
+                            ],
+                            "FromType": "long",
+                            "ToType": "long",
+                            "Dropped": false
+                        },
+                        {
+                            "ToKey": "action",
+                            "FromPath": [
+                                "action"
+                            ],
+                            "FromType": "string",
+                            "ToType": "string",
+                            "Dropped": false
+                        },
+                        {
+                            "ToKey": "log_status",
+                            "FromPath": [
+                                "log-status"
+                            ],
+                            "FromType": "string",
+                            "ToType": "string",
+                            "Dropped": false
+                        },
+                        {
+                            "ToKey": "vpc_id",
+                            "FromPath": [
+                                "vpc-id"
+                            ],
+                            "FromType": "string",
+                            "ToType": "string",
+                            "Dropped": false
+                        },
+                        {
+                            "ToKey": "subnet_id",
+                            "FromPath": [
+                                "subnet-id"
+                            ],
+                            "FromType": "string",
+                            "ToType": "string",
+                            "Dropped": false
+                        },
+                        {
+                            "ToKey": "instance_id",
+                            "FromPath": [
+                                "instance-id"
+                            ],
+                            "FromType": "string",
+                            "ToType": "string",
+                            "Dropped": false
+                        },
+                        {
+                            "ToKey": "tcp_flags",
+                            "FromPath": [
+                                "tcp-flags"
+                            ],
+                            "FromType": "long",
+                            "ToType": "int",
+                            "Dropped": false
+                        },
+                        {
+                            "ToKey": "flow_direction",
+                            "FromPath": [
+                                "flow-direction"
+                            ],
+                            "FromType": "string",
+                            "ToType": "string",
+                            "Dropped": false
+                        },
+                        {
+                            "ToKey": "pkt_srcaddr",
+                            "FromPath": [
+                                "pkt-srcaddr"
+                            ],
+                            "FromType": "string",
+                            "ToType": "string",
+                            "Dropped": false
+                        },
+                        {
+                            "ToKey": "pkt_dstaddr",
+                            "FromPath": [
+                                "pkt-dstaddr"
+                            ],
+                            "FromType": "string",
+                            "ToType": "string",
+                            "Dropped": false
+                        },
+                        {
+                            "ToKey": "aws_account-id",
+                            "FromPath": [
+                                "aws-account-id"
+                            ],
+                            "FromType": "string",
+                            "ToType": "string",
+                            "Dropped": true
+                        },
+                        {
+                            "ToKey": "aws_service",
+                            "FromPath": [
+                                "aws-service"
+                            ],
+                            "FromType": "string",
+                            "ToType": "string",
+                            "Dropped": true
+                        },
+                        {
+                            "ToKey": "aws_region",
+                            "FromPath": [
+                                "aws-region"
+                            ],
+                            "FromType": "string",
+                            "ToType": "string",
+                            "Dropped": true
+                        },
+                        {
+                            "ToKey": "year",
+                            "FromPath": [
+                                "year"
+                            ],
+                            "FromType": "string",
+                            "ToType": "string",
+                            "Dropped": true
+                        },
+                        {
+                            "ToKey": "month",
+                            "FromPath": [
+                                "month"
+                            ],
+                            "FromType": "string",
+                            "ToType": "string",
+                            "Dropped": true
+                        },
+                        {
+                            "ToKey": "day",
+                            "FromPath": [
+                                "day"
+                            ],
+                            "FromType": "string",
+                            "ToType": "string",
+                            "Dropped": true
+                        },
+                        {
+                            "ToKey": "hour",
+                            "FromPath": [
+                                "hour"
+                            ],
+                            "FromType": "string",
+                            "ToType": "string",
+                            "Dropped": true
+                        }
+                    ]
+                }
+            },
+            "node-1795036458948": {
+                "S3GlueParquetTarget": {
+                    "Name": "Amazon S3",
+                    "Inputs": [
+                        "node-1795036439054"
+                    ],
+                    "PartitionKeys": [
+                        [
+                            "dt"
+                        ]
+                    ],
+                    "Path": "s3://glue-flowlog-etl-curated-209901331329-us-east-1/flows_visual/",
+                    "Compression": "snappy",
+                    "NumberTargetPartitions": "0",
+                    "SchemaChangePolicy": {
+                        "EnableUpdateCatalog": true,
+                        "UpdateBehavior": "UPDATE_IN_DATABASE",
+                        "Table": "flows_curated_visual",
+                        "Database": "flowlogs_db"
+                    },
+                    "AutoDataQuality": {
+                        "IsEnabled": true,
+                        "EvaluationContext": "EvaluateDataQuality_node1795032154754"
+                    }
+                }
+            },
+            "node-1795035995185": {
+                "DynamicTransform": {
+                    "Name": "Derived Column",
+                    "TransformName": "gs_derived",
+                    "Inputs": [
+                        "node-1795035948586"
+                    ],
+                    "Parameters": [
+                        {
+                            "Name": "colName",
+                            "Type": "str",
+                            "Value": [
+                                "start_time"
+                            ],
+                            "IsOptional": false
+                        },
+                        {
+                            "Name": "expr",
+                            "Type": "str",
+                            "Value": [
+                                "CAST(start AS timestamp)"
+                            ],
+                            "IsOptional": false
+                        }
+                    ],
+                    "FunctionName": "gs_derived",
+                    "Path": "s3://aws-glue-studio-transforms-510798373988-prod-us-east-1/gs_derived.py",
+                    "Version": "1.0.0",
+                    "OutputSchemas": [
+                        {
+                            "Columns": [
+                                {
+                                    "Name": "srcaddr",
+                                    "Type": "string"
+                                },
+                                {
+                                    "Name": "vpc_id",
+                                    "Type": "string"
+                                },
+                                {
+                                    "Name": "dstport",
+                                    "Type": "int"
+                                },
+                                {
+                                    "Name": "pkt_srcaddr",
+                                    "Type": "string"
+                                },
+                                {
+                                    "Name": "start",
+                                    "Type": "bigint"
+                                },
+                                {
+                                    "Name": "dstaddr",
+                                    "Type": "string"
+                                },
+                                {
+                                    "Name": "packets",
+                                    "Type": "bigint"
+                                },
+                                {
+                                    "Name": "protocol",
+                                    "Type": "int"
+                                },
+                                {
+                                    "Name": "instance_id",
+                                    "Type": "string"
+                                },
+                                {
+                                    "Name": "log_status",
+                                    "Type": "string"
+                                },
+                                {
+                                    "Name": "account_id",
+                                    "Type": "string"
+                                },
+                                {
+                                    "Name": "interface_id",
+                                    "Type": "string"
+                                },
+                                {
+                                    "Name": "flow_direction",
+                                    "Type": "string"
+                                },
+                                {
+                                    "Name": "tcp_flags",
+                                    "Type": "int"
+                                },
+                                {
+                                    "Name": "bytes",
+                                    "Type": "bigint"
+                                },
+                                {
+                                    "Name": "srcport",
+                                    "Type": "int"
+                                },
+                                {
+                                    "Name": "action",
+                                    "Type": "string"
+                                },
+                                {
+                                    "Name": "subnet_id",
+                                    "Type": "string"
+                                },
+                                {
+                                    "Name": "end",
+                                    "Type": "bigint"
+                                },
+                                {
+                                    "Name": "pkt_dstaddr",
+                                    "Type": "string"
+                                },
+                                {
+                                    "Name": "start_time",
+                                    "Type": "timestamp"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            "node-1795035948586": {
+                "Filter": {
+                    "Name": "Filter",
+                    "Inputs": [
+                        "node-1795035029012"
+                    ],
+                    "LogicalOperator": "AND",
+                    "Filters": [
+                        {
+                            "Operation": "REGEX",
+                            "Negated": false,
+                            "Values": [
+                                {
+                                    "Type": "CONSTANT",
+                                    "Value": [
+                                        "^OK$"
+                                    ]
+                                },
+                                {
+                                    "Type": "COLUMNEXTRACTED",
+                                    "Value": [
+                                        "log_status"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            "node-1795036054735": {
+                "SparkSQL": {
+                    "Name": "SQL Query",
+                    "Inputs": [
+                        "node-1795035995185"
+                    ],
+                    "SqlQuery": "WITH e AS (\n  SELECT *,\n    CAST(`end` AS timestamp)                AS end_time,\n    CAST(`end` - start AS int)              AS duration_sec,\n    CASE protocol WHEN 6 THEN 'TCP' WHEN 17 THEN 'UDP'\n                  WHEN 1 THEN 'ICMP' WHEN 58 THEN 'ICMPv6'\n                  ELSE 'OTHER' END          AS protocol_name,\n    (srcaddr LIKE '10.%' OR srcaddr LIKE '192.168.%' OR\n     (srcaddr LIKE '172.%' AND CAST(split(srcaddr, '[.]')[1] AS INT) BETWEEN 16 AND 31))\n                                            AS src_is_private,\n    (dstaddr LIKE '10.%' OR dstaddr LIKE '192.168.%' OR\n     (dstaddr LIKE '172.%' AND CAST(split(dstaddr, '[.]')[1] AS INT) BETWEEN 16 AND 31))\n                                            AS dst_is_private,\n    concat(substring_index(srcaddr, '.', 3), '.0/24') AS src_subnet_24,\n    tcp_flags = 2                           AS is_syn_only,\n    date_format(start_time, 'yyyy-MM-dd')   AS dt\n  FROM myDataSource\n)\nSELECT *,\n  CASE WHEN src_is_private AND dst_is_private     THEN 'internal'\n       WHEN NOT src_is_private AND dst_is_private THEN 'inbound_external'\n       WHEN src_is_private AND NOT dst_is_private THEN 'outbound_external'\n       ELSE 'external' END AS traffic_category\nFROM e",
+                    "SqlAliases": [
+                        {
+                            "From": "node-1795035995185",
+                            "Alias": "myDataSource"
+                        }
+                    ],
+                    "OutputSchemas": [
+                        {
+                            "Columns": [
+                                {
+                                    "Name": "srcaddr",
+                                    "Type": "string"
+                                },
+                                {
+                                    "Name": "vpc_id",
+                                    "Type": "string"
+                                },
+                                {
+                                    "Name": "dstport",
+                                    "Type": "int"
+                                },
+                                {
+                                    "Name": "pkt_srcaddr",
+                                    "Type": "string"
+                                },
+                                {
+                                    "Name": "start",
+                                    "Type": "bigint"
+                                },
+                                {
+                                    "Name": "dstaddr",
+                                    "Type": "string"
+                                },
+                                {
+                                    "Name": "packets",
+                                    "Type": "bigint"
+                                },
+                                {
+                                    "Name": "protocol",
+                                    "Type": "int"
+                                },
+                                {
+                                    "Name": "instance_id",
+                                    "Type": "string"
+                                },
+                                {
+                                    "Name": "log_status",
+                                    "Type": "string"
+                                },
+                                {
+                                    "Name": "account_id",
+                                    "Type": "string"
+                                },
+                                {
+                                    "Name": "interface_id",
+                                    "Type": "string"
+                                },
+                                {
+                                    "Name": "flow_direction",
+                                    "Type": "string"
+                                },
+                                {
+                                    "Name": "tcp_flags",
+                                    "Type": "int"
+                                },
+                                {
+                                    "Name": "bytes",
+                                    "Type": "bigint"
+                                },
+                                {
+                                    "Name": "srcport",
+                                    "Type": "int"
+                                },
+                                {
+                                    "Name": "action",
+                                    "Type": "string"
+                                },
+                                {
+                                    "Name": "subnet_id",
+                                    "Type": "string"
+                                },
+                                {
+                                    "Name": "end",
+                                    "Type": "bigint"
+                                },
+                                {
+                                    "Name": "pkt_dstaddr",
+                                    "Type": "string"
+                                },
+                                {
+                                    "Name": "start_time",
+                                    "Type": "timestamp"
+                                },
+                                {
+                                    "Name": "end_time",
+                                    "Type": "timestamp"
+                                },
+                                {
+                                    "Name": "duration_sec",
+                                    "Type": "int"
+                                },
+                                {
+                                    "Name": "protocol_name",
+                                    "Type": "string"
+                                },
+                                {
+                                    "Name": "src_is_private",
+                                    "Type": "boolean"
+                                },
+                                {
+                                    "Name": "dst_is_private",
+                                    "Type": "boolean"
+                                },
+                                {
+                                    "Name": "src_subnet_24",
+                                    "Type": "string"
+                                },
+                                {
+                                    "Name": "is_syn_only",
+                                    "Type": "boolean"
+                                },
+                                {
+                                    "Name": "dt",
+                                    "Type": "string"
+                                },
+                                {
+                                    "Name": "traffic_category",
+                                    "Type": "string"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            "node-1795036439054": {
+                "DropFields": {
+                    "Name": "Drop Fields",
+                    "Inputs": [
+                        "node-1795036054735"
+                    ],
+                    "Paths": [
+                        [
+                            "start"
+                        ],
+                        [
+                            "end"
+                        ],
+                        [
+                            "log_status"
+                        ]
+                    ]
+                }
+            }
+        },
+        "ExecutionClass": "STANDARD"
+    }
+}
