@@ -1,0 +1,6 @@
+version account-id interface-id srcaddr dstaddr srcport dstport protocol packets bytes start end action log-status vpc-id subnet-id instance-id tcp-flags flow-direction pkt-srcaddr pkt-dstaddr
+5 209901331329 eni-chaostest 203.0.113.10 10.50.1.174 51515 23 6 1 40 1795000000 1795000060 REJECT OK vpc-chaostest subnet-chaostest i-chaostest 2 ingress 203.0.113.10 10.50.1.174
+5 209901331329 eni-chaostest 203.0.113.11 10.50.1.174 51516 22 6 1 40 1795000000 1795000060 MAYBE OK vpc-chaostest subnet-chaostest i-chaostest 2 ingress 203.0.113.11 10.50.1.174
+5 209901331329 eni-chaostest 203.0.113.12 10.50.1.174 51517 70000 6 1 40 1795000000 1795000060 REJECT OK vpc-chaostest subnet-chaostest i-chaostest 2 ingress 203.0.113.12 10.50.1.174
+5 209901331329 eni-chaostest 203.0.113.13 10.50.1.174 51518 443 6 1 40 1795000060 1795000000 REJECT OK vpc-chaostest subnet-chaostest i-chaostest 2 ingress 203.0.113.13 10.50.1.174
+5 209901331329 eni-chaostest - - - - - - - 1795000000 1795000060 - NODATA vpc-chaostest subnet-chaostest i-chaostest - ingress - -
