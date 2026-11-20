@@ -1,0 +1,23 @@
+{
+    "Trigger": {
+        "Name": "after-crawler-succeeds",
+        "WorkflowName": "flowlogs-pipeline",
+        "Type": "CONDITIONAL",
+        "State": "ACTIVATED",
+        "Actions": [
+            {
+                "JobName": "flowlogs-raw-to-curated"
+            }
+        ],
+        "Predicate": {
+            "Logical": "ANY",
+            "Conditions": [
+                {
+                    "LogicalOperator": "EQUALS",
+                    "JobName": "flowlogs-register-partitions",
+                    "State": "SUCCEEDED"
+                }
+            ]
+        }
+    }
+}

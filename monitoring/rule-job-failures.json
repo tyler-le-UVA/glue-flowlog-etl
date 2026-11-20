@@ -1,0 +1,9 @@
+{
+    "Name": "glue-flowlog-etl-job-failures",
+    "Arn": "arn:aws:events:us-east-1:209901331329:rule/glue-flowlog-etl-job-failures",
+    "EventPattern": "{\"source\":[\"aws.glue\"],\"detail-type\":[\"Glue Job State Change\"],\"detail\":{\"jobName\":[\"flowlogs-raw-to-curated\",\"flowlogs-curated-to-findings\"],\"state\":[\"FAILED\",\"TIMEOUT\"]}}",
+    "State": "ENABLED",
+    "Description": "",
+    "EventBusName": "default",
+    "CreatedBy": "209901331329"
+}

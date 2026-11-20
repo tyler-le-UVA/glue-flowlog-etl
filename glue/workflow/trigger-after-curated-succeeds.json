@@ -1,0 +1,23 @@
+{
+    "Trigger": {
+        "Name": "after-curated-succeeds.",
+        "WorkflowName": "flowlogs-pipeline",
+        "Type": "CONDITIONAL",
+        "State": "ACTIVATED",
+        "Actions": [
+            {
+                "JobName": "flowlogs-curated-to-findings"
+            }
+        ],
+        "Predicate": {
+            "Logical": "ANY",
+            "Conditions": [
+                {
+                    "LogicalOperator": "EQUALS",
+                    "JobName": "flowlogs-raw-to-curated",
+                    "State": "SUCCEEDED"
+                }
+            ]
+        }
+    }
+}

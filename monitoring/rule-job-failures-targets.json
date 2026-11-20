@@ -1,0 +1,18 @@
+{
+    "Targets": [
+        {
+            "Id": "Idf0aeceb3-929c-4dfa-9b69-01b305c8175c",
+            "Arn": "arn:aws:sns:us-east-1:209901331329:glue-flowlog-etl-alerts",
+            "RoleArn": "arn:aws:iam::209901331329:role/service-role/Amazon_EventBridge_Invoke_Sns_1959234341",
+            "InputTransformer": {
+                "InputPathsMap": {
+                    "job": "$.detail.jobName",
+                    "msg": "$.detail.message",
+                    "run": "$.detail.jobRunId",
+                    "state": "$.detail.state"
+                },
+                "InputTemplate": "\"Glue job <job> ended in state <state>. Reason: <msg> Run ID: <run>\""
+            }
+        }
+    ]
+}

@@ -1,0 +1,316 @@
+{
+    "Workflow": {
+        "Name": "flowlogs-pipeline",
+        "Description": "crawler -> raw_to_curated -> findings",
+        "DefaultRunProperties": {},
+        "CreatedOn": "2026-11-20T16:40:23.828000+00:00",
+        "LastModifiedOn": "2026-11-20T16:40:23.828000+00:00",
+        "LastRun": {
+            "Name": "flowlogs-pipeline",
+            "WorkflowRunId": "wr_3694fb2a323e5dbbb1b1d6bf13f83982ebc1d20e0acc4b7cc1c5cd48d0d96af6",
+            "WorkflowRunProperties": {},
+            "StartedOn": "2026-11-20T19:07:19.064000+00:00",
+            "CompletedOn": "2026-11-20T19:10:35.400000+00:00",
+            "Status": "COMPLETED",
+            "Statistics": {
+                "TotalActions": 3,
+                "TimeoutActions": 0,
+                "FailedActions": 1,
+                "StoppedActions": 0,
+                "SucceededActions": 1,
+                "RunningActions": 0,
+                "ErroredActions": 0,
+                "WaitingActions": 0
+            },
+            "Graph": {
+                "Nodes": [
+                    {
+                        "Type": "TRIGGER",
+                        "Name": "start-every-6h",
+                        "UniqueId": "wnode_2ffa3009f5849978140147aa17149c88d457108b7fbaebed8c7083fc43dc4377",
+                        "TriggerDetails": {
+                            "Trigger": {
+                                "Name": "start-every-6h",
+                                "WorkflowName": "flowlogs-pipeline",
+                                "Type": "SCHEDULED",
+                                "State": "DEACTIVATED",
+                                "Schedule": "cron(15 */6 * * ? *)",
+                                "Actions": [
+                                    {
+                                        "JobName": "flowlogs-register-partitions"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    {
+                        "Type": "TRIGGER",
+                        "Name": "after-crawler-succeeds",
+                        "UniqueId": "wnode_c624b52fabf2a39da35b9ae6ce6c7376ebd3617cf06447257a44b400c059743e",
+                        "TriggerDetails": {
+                            "Trigger": {
+                                "Name": "after-crawler-succeeds",
+                                "WorkflowName": "flowlogs-pipeline",
+                                "Type": "CONDITIONAL",
+                                "State": "ACTIVATED",
+                                "Actions": [
+                                    {
+                                        "JobName": "flowlogs-raw-to-curated"
+                                    }
+                                ],
+                                "Predicate": {
+                                    "Logical": "ANY",
+                                    "Conditions": [
+                                        {
+                                            "LogicalOperator": "EQUALS",
+                                            "JobName": "flowlogs-register-partitions",
+                                            "State": "SUCCEEDED"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "Type": "TRIGGER",
+                        "Name": "after-curated-succeeds.",
+                        "UniqueId": "wnode_3a157e024e260aba500e3b7b21d93256ab84f34ed3d85739b49a52121f5ea90c",
+                        "TriggerDetails": {
+                            "Trigger": {
+                                "Name": "after-curated-succeeds.",
+                                "WorkflowName": "flowlogs-pipeline",
+                                "Type": "CONDITIONAL",
+                                "State": "ACTIVATED",
+                                "Actions": [
+                                    {
+                                        "JobName": "flowlogs-curated-to-findings"
+                                    }
+                                ],
+                                "Predicate": {
+                                    "Logical": "ANY",
+                                    "Conditions": [
+                                        {
+                                            "LogicalOperator": "EQUALS",
+                                            "JobName": "flowlogs-raw-to-curated",
+                                            "State": "SUCCEEDED"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "Type": "JOB",
+                        "Name": "flowlogs-raw-to-curated",
+                        "UniqueId": "wnode_6bea54e223f367ce151f046401b4e86fe4b1a3de2d323438d2d14c7c9894542e",
+                        "JobDetails": {
+                            "JobRuns": [
+                                {
+                                    "Id": "jr_c88d02274d0cab1b99fe0b7c4548fd699ed1b8f4b653af5e4ba7d5fc24e85165",
+                                    "Attempt": 0,
+                                    "TriggerName": "after-crawler-succeeds",
+                                    "JobName": "flowlogs-raw-to-curated",
+                                    "JobMode": "SCRIPT",
+                                    "JobRunQueuingEnabled": false,
+                                    "StartedOn": "2026-11-20T19:08:49.026000+00:00",
+                                    "LastModifiedOn": "2026-11-20T19:10:35.400000+00:00",
+                                    "CompletedOn": "2026-11-20T19:10:35.400000+00:00",
+                                    "JobRunState": "FAILED",
+                                    "ErrorMessage": "Error Category: UNCLASSIFIED_ERROR; Failed Line Number: 254; RuntimeError: Data quality circuit breaker: 75.00% of rows failed (limit 5.0%). Nothing written; batch will be retried.",
+                                    "PredecessorRuns": [],
+                                    "AllocatedCapacity": 2,
+                                    "ExecutionTime": 98,
+                                    "Timeout": 15,
+                                    "MaxCapacity": 2.0,
+                                    "WorkerType": "G.1X",
+                                    "NumberOfWorkers": 2,
+                                    "LogGroupName": "/aws-glue/jobs",
+                                    "GlueVersion": "6.0",
+                                    "DPUSeconds": 197.0,
+                                    "ExecutionClass": "STANDARD"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "Type": "JOB",
+                        "Name": "flowlogs-register-partitions",
+                        "UniqueId": "wnode_0a804102707bcdd46dd266b03c1a9a0a920192a769a255e2b0334958bdd4d2a3",
+                        "JobDetails": {
+                            "JobRuns": [
+                                {
+                                    "Id": "jr_4ff1596641e57dd891c68cb11cce00ec2d1652f8e3ed53c27b5b6c16c766da42",
+                                    "Attempt": 0,
+                                    "TriggerName": "start-every-6h",
+                                    "JobName": "flowlogs-register-partitions",
+                                    "JobMode": "SCRIPT",
+                                    "JobRunQueuingEnabled": false,
+                                    "StartedOn": "2026-11-20T19:07:54.167000+00:00",
+                                    "LastModifiedOn": "2026-11-20T19:08:17.452000+00:00",
+                                    "CompletedOn": "2026-11-20T19:08:17.452000+00:00",
+                                    "JobRunState": "SUCCEEDED",
+                                    "PredecessorRuns": [],
+                                    "AllocatedCapacity": 0,
+                                    "ExecutionTime": 14,
+                                    "Timeout": 10,
+                                    "MaxCapacity": 0.0625,
+                                    "LogGroupName": "/aws-glue/python-jobs",
+                                    "GlueVersion": "3.0",
+                                    "ExecutionClass": "STANDARD"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "Type": "JOB",
+                        "Name": "flowlogs-curated-to-findings",
+                        "UniqueId": "wnode_499187e6181ce52442acc932e915bf363b35a8b868c73a58c007ff7af557cdf3",
+                        "JobDetails": {}
+                    }
+                ],
+                "Edges": [
+                    {
+                        "SourceId": "wnode_c624b52fabf2a39da35b9ae6ce6c7376ebd3617cf06447257a44b400c059743e",
+                        "DestinationId": "wnode_6bea54e223f367ce151f046401b4e86fe4b1a3de2d323438d2d14c7c9894542e"
+                    },
+                    {
+                        "SourceId": "wnode_2ffa3009f5849978140147aa17149c88d457108b7fbaebed8c7083fc43dc4377",
+                        "DestinationId": "wnode_0a804102707bcdd46dd266b03c1a9a0a920192a769a255e2b0334958bdd4d2a3"
+                    },
+                    {
+                        "SourceId": "wnode_3a157e024e260aba500e3b7b21d93256ab84f34ed3d85739b49a52121f5ea90c",
+                        "DestinationId": "wnode_499187e6181ce52442acc932e915bf363b35a8b868c73a58c007ff7af557cdf3"
+                    },
+                    {
+                        "SourceId": "wnode_0a804102707bcdd46dd266b03c1a9a0a920192a769a255e2b0334958bdd4d2a3",
+                        "DestinationId": "wnode_c624b52fabf2a39da35b9ae6ce6c7376ebd3617cf06447257a44b400c059743e"
+                    },
+                    {
+                        "SourceId": "wnode_6bea54e223f367ce151f046401b4e86fe4b1a3de2d323438d2d14c7c9894542e",
+                        "DestinationId": "wnode_3a157e024e260aba500e3b7b21d93256ab84f34ed3d85739b49a52121f5ea90c"
+                    }
+                ]
+            }
+        },
+        "Graph": {
+            "Nodes": [
+                {
+                    "Type": "TRIGGER",
+                    "Name": "start-every-6h",
+                    "UniqueId": "wnode_2ffa3009f5849978140147aa17149c88d457108b7fbaebed8c7083fc43dc4377",
+                    "TriggerDetails": {
+                        "Trigger": {
+                            "Name": "start-every-6h",
+                            "WorkflowName": "flowlogs-pipeline",
+                            "Type": "SCHEDULED",
+                            "State": "DEACTIVATED",
+                            "Schedule": "cron(15 */6 * * ? *)",
+                            "Actions": [
+                                {
+                                    "JobName": "flowlogs-register-partitions"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "Type": "TRIGGER",
+                    "Name": "after-crawler-succeeds",
+                    "UniqueId": "wnode_c624b52fabf2a39da35b9ae6ce6c7376ebd3617cf06447257a44b400c059743e",
+                    "TriggerDetails": {
+                        "Trigger": {
+                            "Name": "after-crawler-succeeds",
+                            "WorkflowName": "flowlogs-pipeline",
+                            "Type": "CONDITIONAL",
+                            "State": "ACTIVATED",
+                            "Actions": [
+                                {
+                                    "JobName": "flowlogs-raw-to-curated"
+                                }
+                            ],
+                            "Predicate": {
+                                "Logical": "ANY",
+                                "Conditions": [
+                                    {
+                                        "LogicalOperator": "EQUALS",
+                                        "JobName": "flowlogs-register-partitions",
+                                        "State": "SUCCEEDED"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                {
+                    "Type": "TRIGGER",
+                    "Name": "after-curated-succeeds.",
+                    "UniqueId": "wnode_3a157e024e260aba500e3b7b21d93256ab84f34ed3d85739b49a52121f5ea90c",
+                    "TriggerDetails": {
+                        "Trigger": {
+                            "Name": "after-curated-succeeds.",
+                            "WorkflowName": "flowlogs-pipeline",
+                            "Type": "CONDITIONAL",
+                            "State": "ACTIVATED",
+                            "Actions": [
+                                {
+                                    "JobName": "flowlogs-curated-to-findings"
+                                }
+                            ],
+                            "Predicate": {
+                                "Logical": "ANY",
+                                "Conditions": [
+                                    {
+                                        "LogicalOperator": "EQUALS",
+                                        "JobName": "flowlogs-raw-to-curated",
+                                        "State": "SUCCEEDED"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                {
+                    "Type": "JOB",
+                    "Name": "flowlogs-register-partitions",
+                    "UniqueId": "wnode_0a804102707bcdd46dd266b03c1a9a0a920192a769a255e2b0334958bdd4d2a3",
+                    "JobDetails": {}
+                },
+                {
+                    "Type": "JOB",
+                    "Name": "flowlogs-raw-to-curated",
+                    "UniqueId": "wnode_6bea54e223f367ce151f046401b4e86fe4b1a3de2d323438d2d14c7c9894542e",
+                    "JobDetails": {}
+                },
+                {
+                    "Type": "JOB",
+                    "Name": "flowlogs-curated-to-findings",
+                    "UniqueId": "wnode_499187e6181ce52442acc932e915bf363b35a8b868c73a58c007ff7af557cdf3",
+                    "JobDetails": {}
+                }
+            ],
+            "Edges": [
+                {
+                    "SourceId": "wnode_2ffa3009f5849978140147aa17149c88d457108b7fbaebed8c7083fc43dc4377",
+                    "DestinationId": "wnode_0a804102707bcdd46dd266b03c1a9a0a920192a769a255e2b0334958bdd4d2a3"
+                },
+                {
+                    "SourceId": "wnode_c624b52fabf2a39da35b9ae6ce6c7376ebd3617cf06447257a44b400c059743e",
+                    "DestinationId": "wnode_6bea54e223f367ce151f046401b4e86fe4b1a3de2d323438d2d14c7c9894542e"
+                },
+                {
+                    "SourceId": "wnode_3a157e024e260aba500e3b7b21d93256ab84f34ed3d85739b49a52121f5ea90c",
+                    "DestinationId": "wnode_499187e6181ce52442acc932e915bf363b35a8b868c73a58c007ff7af557cdf3"
+                },
+                {
+                    "SourceId": "wnode_0a804102707bcdd46dd266b03c1a9a0a920192a769a255e2b0334958bdd4d2a3",
+                    "DestinationId": "wnode_c624b52fabf2a39da35b9ae6ce6c7376ebd3617cf06447257a44b400c059743e"
+                },
+                {
+                    "SourceId": "wnode_6bea54e223f367ce151f046401b4e86fe4b1a3de2d323438d2d14c7c9894542e",
+                    "DestinationId": "wnode_3a157e024e260aba500e3b7b21d93256ab84f34ed3d85739b49a52121f5ea90c"
+                }
+            ]
+        },
+        "MaxConcurrentRuns": 1
+    }
+}

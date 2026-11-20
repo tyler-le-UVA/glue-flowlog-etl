@@ -1,0 +1,14 @@
+{
+    "Trigger": {
+        "Name": "start-every-6h",
+        "WorkflowName": "flowlogs-pipeline",
+        "Type": "SCHEDULED",
+        "State": "DEACTIVATED",
+        "Schedule": "cron(15 */6 * * ? *)",
+        "Actions": [
+            {
+                "JobName": "flowlogs-register-partitions"
+            }
+        ]
+    }
+}

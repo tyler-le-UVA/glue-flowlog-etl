@@ -1,0 +1,55 @@
+{
+    "Crawler": {
+        "Name": "flowlogs-raw-crawler",
+        "Role": "glue-flowlog-etl-crawler-role",
+        "Targets": {
+            "S3Targets": [],
+            "JdbcTargets": [],
+            "MongoDBTargets": [],
+            "DynamoDBTargets": [],
+            "CatalogTargets": [
+                {
+                    "DatabaseName": "flowlogs_db",
+                    "Tables": [
+                        "raw_awslogs"
+                    ]
+                }
+            ],
+            "DeltaTargets": [],
+            "IcebergTargets": [],
+            "HudiTargets": []
+        },
+        "DatabaseName": "flowlogs_db",
+        "Classifiers": [
+            "flowlogs-space-delimited"
+        ],
+        "RecrawlPolicy": {
+            "RecrawlBehavior": "CRAWL_EVERYTHING"
+        },
+        "SchemaChangePolicy": {
+            "UpdateBehavior": "LOG",
+            "DeleteBehavior": "LOG"
+        },
+        "LineageConfiguration": {
+            "CrawlerLineageSettings": "DISABLE"
+        },
+        "State": "READY",
+        "TablePrefix": "raw_",
+        "CrawlElapsedTime": 0,
+        "CreationTime": "2026-11-17T21:05:33+00:00",
+        "LastUpdated": "2026-11-20T18:34:07+00:00",
+        "LastCrawl": {
+            "Status": "SUCCEEDED",
+            "LogGroup": "/aws-glue/crawlers",
+            "LogStream": "flowlogs-raw-crawler",
+            "MessagePrefix": "bcf81e2f-c416-308d-8099-ada0a84b5e18",
+            "StartTime": "2026-11-20T18:40:19+00:00"
+        },
+        "Version": 2,
+        "Configuration": "{\"Version\":1.0,\"CrawlerOutput\":{\"Partitions\":{\"AddOrUpdateBehavior\":\"InheritFromTable\"}},\"Grouping\":{\"TableGroupingPolicy\":\"CombineCompatibleSchemas\"}}",
+        "LakeFormationConfiguration": {
+            "UseLakeFormationCredentials": false,
+            "AccountId": ""
+        }
+    }
+}

@@ -1,0 +1,33 @@
+{
+    "Job": {
+        "Name": "flowlogs-register-partitions",
+        "JobMode": "SCRIPT",
+        "JobRunQueuingEnabled": false,
+        "Description": "",
+        "Role": "arn:aws:iam::209901331329:role/glue-flowlog-etl-job-role",
+        "CreatedOn": "2026-11-20T18:59:23.744000+00:00",
+        "LastModifiedOn": "2026-11-20T18:59:54.013000+00:00",
+        "ExecutionProperty": {
+            "MaxConcurrentRuns": 1
+        },
+        "Command": {
+            "Name": "pythonshell",
+            "ScriptLocation": "s3://aws-glue-assets-209901331329-us-east-1/scripts/flowlogs-register-partitions.py",
+            "PythonVersion": "3.9"
+        },
+        "DefaultArguments": {
+            "--enable-job-insights": "false",
+            "--job-language": "python",
+            "--TempDir": "s3://aws-glue-assets-209901331329-us-east-1/temporary/",
+            "--enable-observability-metrics": "false",
+            "--enable-glue-datacatalog": "",
+            "library-set": "analytics"
+        },
+        "MaxRetries": 0,
+        "AllocatedCapacity": 0,
+        "Timeout": 10,
+        "MaxCapacity": 0.0625,
+        "GlueVersion": "3.0",
+        "ExecutionClass": "STANDARD"
+    }
+}
