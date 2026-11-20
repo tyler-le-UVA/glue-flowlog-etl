@@ -1,0 +1,41 @@
+{
+    "Job": {
+        "Name": "flowlogs-curated-to-findings",
+        "JobMode": "SCRIPT",
+        "JobRunQueuingEnabled": false,
+        "Description": "",
+        "Role": "arn:aws:iam::209901331329:role/glue-flowlog-etl-job-role",
+        "CreatedOn": "2026-11-20T15:48:41.781000+00:00",
+        "LastModifiedOn": "2026-11-20T16:21:14.882000+00:00",
+        "ExecutionProperty": {
+            "MaxConcurrentRuns": 1
+        },
+        "Command": {
+            "Name": "glueetl",
+            "ScriptLocation": "s3://aws-glue-assets-209901331329-us-east-1/scripts/flowlogs-curated-to-findings.py",
+            "PythonVersion": "3"
+        },
+        "DefaultArguments": {
+            "--enable-metrics": "",
+            "--enable-spark-ui": "true",
+            "--spark-event-logs-path": "s3://aws-glue-assets-209901331329-us-east-1/sparkHistoryLogs/",
+            "--enable-job-insights": "true",
+            "--enable-observability-metrics": "true",
+            "--conf": "spark.eventLog.rolling.enabled=true --conf spark.sql.catalog.glue_catalog.glue.skip-name-validation=true",
+            "--enable-glue-datacatalog": "",
+            "--enable-continuous-cloudwatch-log": "true",
+            "--job-bookmark-option": "job-bookmark-disable",
+            "--job-language": "python",
+            "--FINDINGS_PATH": "s3://glue-flowlog-etl-curated-209901331329-us-east-1/findings/",
+            "--TempDir": "s3://aws-glue-assets-209901331329-us-east-1/temporary/"
+        },
+        "MaxRetries": 0,
+        "AllocatedCapacity": 2,
+        "Timeout": 15,
+        "MaxCapacity": 2.0,
+        "WorkerType": "G.1X",
+        "NumberOfWorkers": 2,
+        "GlueVersion": "6.0",
+        "ExecutionClass": "STANDARD"
+    }
+}
