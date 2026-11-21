@@ -1,0 +1,23 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "ReadRawFlowLogs",
+            "Effect": "Allow",
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::glue-flowlog-etl-raw-209901331329-us-east-1/raw/AWSLogs/*"
+        },
+        {
+            "Sid": "ListRawBucket",
+            "Effect": "Allow",
+            "Action": "s3:ListBucket",
+            "Resource": "arn:aws:s3:::glue-flowlog-etl-raw-209901331329-us-east-1"
+        },
+        {
+            "Sid": "DecryptWithProjectKey",
+            "Effect": "Allow",
+            "Action": "kms:Decrypt",
+            "Resource": "arn:aws:kms:us-east-1:209901331329:key/fa34605e-7a79-4b3b-b8d4-124479d86dd7"
+        }
+    ]
+}

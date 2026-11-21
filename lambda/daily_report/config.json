@@ -1,0 +1,18 @@
+{
+    "Runtime": "python3.15",
+    "Timeout": 120,
+    "MemorySize": 256,
+    "Role": "arn:aws:iam::209901331329:role/glue-flowlog-etl-report-lambda-role",
+    "Environment": {
+        "Variables": {
+            "MODEL_ID": "us.amazon.nova-2-lite-v1:0",
+            "MAX_FINDINGS": "60",
+            "REPORT_BUCKET": "glue-flowlog-etl-curated-209901331329-us-east-1",
+            "DATABASE": "flowlogs_db",
+            "WORKGROUP": "flowlogs-wg",
+            "KNOWN_ASSETS": "10.50.1.181=authorized lab scanner (hourly nmap of 10.50.1.174); 10.50.1.174=lab web server (nginx, only port 80 open to the scanner)",
+            "REPORT_PREFIX": "reports/",
+            "TOPIC_ARN": "arn:aws:sns:us-east-1:209901331329:glue-flowlog-etl-alerts"
+        }
+    }
+}

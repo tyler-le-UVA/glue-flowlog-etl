@@ -1,0 +1,8 @@
+{
+    "Targets": [
+        {
+            "Id": "daily-report",
+            "Arn": "arn:aws:lambda:us-east-1:209901331329:function:flowlogs-daily-report"
+        }
+    ]
+}
